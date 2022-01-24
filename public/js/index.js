@@ -5,5 +5,5 @@
 
 // });
 
-var hello = () => "Hi welcome to my starter kit";
+var hello = () => "Hi welcome to my starter kit - frontend";
 console.log(hello());
