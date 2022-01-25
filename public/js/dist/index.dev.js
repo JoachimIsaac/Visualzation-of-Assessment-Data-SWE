@@ -4,7 +4,7 @@
 //     $('#head1').hide();
 // });
 var hello = function hello() {
-  return "Hi welcome to my starter kit frontend and backend";
+  return "Hi welcome to my starter kit - frontend-";
 };
 
 console.log(hello());
