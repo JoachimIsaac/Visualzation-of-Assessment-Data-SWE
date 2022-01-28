@@ -2,9 +2,49 @@ header {
   background: red;
 }
 
-body h1 {
-  font-size: 4rem;
+.navbar {
+  background-color: #1a8cff;
 }
-body h2 {
-  color: #0059ff;
+.navbar .container .navbar-logo {
+  padding: 5px;
+  margin-bottom: 0;
+}
+.navbar .container .navbar-logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 40%;
+  border: 4px solid lightgrey;
+  transition: all ease-in-out 0.3s;
+}
+.navbar .container .navbar-logo:hover {
+  padding: 5px;
+  margin-bottom: 0;
+}
+.navbar .container .navbar-logo:hover img {
+  width: 45px;
+  height: 45px;
+  border-radius: 40%;
+  border: 4px solid yellow;
+}
+.navbar .container button {
+  margin-right: 15px;
+  border: 2px solid white;
+  transition: all ease-in-out 0.3s;
+}
+.navbar .container button:hover {
+  margin-right: 15px;
+  border: 4px solid yellow;
+}
+.navbar .container .options-area .navbar-nav {
+  margin-left: auto;
+  margin-right: 15px;
+}
+.navbar .container .options-area .navbar-nav li a {
+  color: white;
+  font-size: 1.2rem;
+  transition: all ease-in-out 0.3s;
+}
+.navbar .container .options-area .navbar-nav li a:hover {
+  font-weight: bold;
+  color: yellow;
 }
