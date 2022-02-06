@@ -3,6 +3,8 @@
 
 
 .navbar{
+
+
     background-color: #1a8cff;
     .container{
     
@@ -49,13 +51,13 @@
             margin-left: auto;
             margin-right: 15px;
 
-           li a{
+           li span{
                color: white;
                font-size: 1.2rem;
                transition: all ease-in-out 0.3s;
            } 
 
-           li a:hover{
+           li span:hover{
                font-weight: bold;
                color: yellow;
           
@@ -69,3 +71,4 @@
 
 }
 }
+
