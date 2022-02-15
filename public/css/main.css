@@ -3,6 +3,7 @@ header {
 }
 
 .navbar {
+  display: inline-block;
   background-color: #1a8cff;
 }
 .navbar .container .navbar-logo {
@@ -50,4 +51,66 @@ header {
 .navbar .container .options-area .navbar-nav li span:hover {
   font-weight: bold;
   color: yellow;
+}
+
+#interactive-area {
+  margin-top: 70.5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  overflow-y: hidden;
+  /* Hide vertical scrollbar */
+  overflow-x: hidden;
+  /* Hide horizontal scrollbar */
+}
+#interactive-area #dashboard-logo {
+  margin-top: 50.5px;
+  -webkit-animation-name: spin;
+          animation-name: spin;
+  -webkit-animation-duration: 5000ms;
+          animation-duration: 5000ms;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+#interactive-area #dashboard-logo img {
+  border-radius: 80%;
+  border: 5px solid lightgrey;
+  -webkit-transition: all ease-in-out 0.6s;
+  transition: all ease-in-out 0.6s;
+}
+#interactive-area #dashboard-logo img:hover {
+  border-radius: 80%;
+  border: 5px solid yellow;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
