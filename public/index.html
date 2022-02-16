@@ -9,26 +9,122 @@
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
-      <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <!-- Plotting Modal -->
+<div class="modal fade" id="plottingModal" tabindex="-1" role="dialog" aria-labelledby="plottingModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="plottingModalTitle">Plot Data</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-       Hello working!!!!!
+    <form action="">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="SLO-selector-plt">SLO</label>
+          </div>
+          <select id="SLO-selector">
+            <option selected>Choose...</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="measure-selector-plt">Measure</label>
+          </div>
+          <select id="measure-selector-plt">
+            <option selected>Choose...</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="start-selector">Start Date</label>
+          </div>
+          <select id="start-selector">
+            <option selected>Choose...</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">End Date</label>
+          </div>
+          <select id="end-selector">
+            <option selected>Choose...</option>
+          </select>
+        </div>
+   
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Plot</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
+ 
+
+ <!-- input Modal -->
+<div class="modal fade" id="dataInputModal" tabindex="-1" role="dialog" aria-labelledby="plottingModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="plottingModalTitle">Input Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    <form action="">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="SLO-selector-dat">SLO</label>
+          </div>
+          <select id="SLO-selector-dat">
+            <option selected>Choose...</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="measure-selector-dat">Measure</label>
+          </div>
+          <select id="measure-selector-dat">
+            <option selected>Choose...</option>
+          </select>
+        </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Target</span>
+        </div>
+         <div class="input-group-prepend ms-3">
+          <span class="input-group-text" id="">Default</span>
+        </div>
+      </div>
+      
+      <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Number of Students</span>
+              </div>
+              <input type="text" class="form-control">
+      </div>
+
+      <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Number of Students that met target</span>
+              </div>
+              <input type="text" class="form-control">
+      </div>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
 
             <nav class="navbar fixed-top  navbar-expand-md
             navbar-dark">
@@ -52,13 +148,13 @@
             <div class="options-area collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <span  class="nav-link" data-toggle="modal" data-target="#exampleModalCenter">
-                        Select Class
+                        <span  class="nav-link" data-toggle="modal" data-target="#plottingModal">
+                        Plot Data
                         </span>
                     </li>
                     <li class="nav-item ">
-                       <span  class="nav-link" data-toggle="modal" data-target="#exampleModalCenter">
-                        Input File
+                       <span  class="nav-link" data-toggle="modal" data-target="#dataInputModal">
+                        Input Data
                        </span>
                     </li>
                 </ul>
