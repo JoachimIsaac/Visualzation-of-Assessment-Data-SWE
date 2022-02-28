@@ -6,6 +6,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
@@ -23,41 +24,41 @@
     <form action="">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="SLO-selector-plt">SLO</label>
+            <label class="input-group-text" for="SLO-selector-plt">SLO:</label>
           </div>
           <select id="SLO-selector">
-            <option selected>Choose...</option>
+            <option selected value="0" disabled>Choose...</option>
           </select>
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="measure-selector-plt">Measure</label>
+            <label class="input-group-text" for="measure-selector-plt">Measure:</label>
           </div>
           <select id="measure-selector-plt">
-            <option selected>Choose...</option>
+            <option selected disabled>Choose...</option>
           </select>
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="start-selector">Start Date</label>
+            <label class="input-group-text" for="start-selector">Start Date:</label>
           </div>
           <select id="start-selector">
-            <option selected>Choose...</option>
+            <option selected disabled>Choose...</option>
           </select>
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">End Date</label>
+            <label class="input-group-text" for="inputGroupSelect01">End Date:</label>
           </div>
           <select id="end-selector">
-            <option selected>Choose...</option>
+            <option selected >Choose...</option>
           </select>
         </div>
    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Plot</button>
+        <button type="button" class="btn btn-primary" id="plotting-button">Plot</button>
       </div>
       </form>
     </div>
@@ -79,46 +80,69 @@
     <form action="">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="SLO-selector-dat">SLO</label>
+            <label class="input-group-text" for="SLO-selector-dat">SLO:</label>
           </div>
-          <select id="SLO-selector-dat">
+          <select id="SLO-selector-data">
             <option selected>Choose...</option>
           </select>
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="measure-selector-dat">Measure</label>
+            <label class="input-group-text" for="measure-selector-dat">Measure:</label>
           </div>
-          <select id="measure-selector-dat">
+          <select id="measure-selector-data">
             <option selected>Choose...</option>
           </select>
         </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">Target</span>
+          <span class="input-group-text" id="academic-year-title-tag">Academic Year:</span>
         </div>
          <div class="input-group-prepend ms-3">
-          <span class="input-group-text" id="">Default</span>
+          <span class="input-group-text" id="current-academic-year-tag">Default</span>
         </div>
       </div>
-      
-      <div class="input-group mb-2">
+       <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="SLO-selector-target">Target:</label>
+          </div>
+          <select id="SLO-selector-target">
+            <option selected>Choose...</option>
+          </select>
+        </div>
+       <div class="input-group mb-2">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="">Number of Students</span>
+                <span class="input-group-text" id="">Target amount:</span>
               </div>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" id="student-target-input">
+      </div>
+      <div class="form-check form-switch mb-2">
+        <input class="form-check-input" type="checkbox" id="flexSwitchStudentPercentageCheck">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Use only percentage of students who met target.</label>
+      </div>
+      <div class="input-group mb-2" id="number-of-students-container">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Number of Students:</span>
+              </div>
+              <input type="text" class="form-control" id="number-of-students-input">
       </div>
 
-      <div class="input-group mb-2">
+      <div class="input-group mb-2" id="number-of-students-met-container">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="">Number of Students that met target</span>
+                <span class="input-group-text" id="">Number of Students that met the target:</span>
               </div>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" id="number-of-students-met-input">
+      </div>
+      <div class="input-group mb-2" id="percentage-of-students-met-container" style="display: none;">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Percentage of students who met the target:</span>
+              </div>
+              <input type="text" class="form-control" id="percentage-of-students-met-input">
       </div>
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary" id="data-input-button">Save</button>
       </div>
   </form>
     </div>
