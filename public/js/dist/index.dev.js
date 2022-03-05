@@ -1,16 +1,46 @@
 "use strict";
 
+// 
 var allSloURL = 'https://visualization-practice-api.herokuapp.com/slo/all';
 var studentPecentageCheckSwitch = document.getElementById('flexSwitchStudentPercentageCheck');
 var numberOfStudentsContainer = document.getElementById('number-of-students-container');
 var numberOfStudentsMetContainer = document.getElementById('number-of-students-met-container');
 var percentageOfStudentsContainer = document.getElementById('percentage-of-students-met-container');
-var modalPlotSloSelector = document.getElementById('SLO-selector');
+var modalPlotSloSelector = document.getElementById('SLO-selector-plt');
 var modalPlotMeasureSelector = document.getElementById('measure-selector-plt');
-var modalPlotStartDateSelector = document.getElementById('start-selector');
-var modalPlotEndDateSelector = document.getElementById('end-selector');
+var modalPlotStartDateSelector = document.getElementById('start-selector-plt');
+var modalPlotEndDateSelector = document.getElementById('end-selector-plt');
 var modalInputSloSelector = document.getElementById('SLO-selector-data');
-var modalInputMeasureSlector = document.getElementById('measure-selector-data');
+var modalInputMeasureSelector = document.getElementById('measure-selector-data');
+var modalInputAcademicTermTag = document.getElementById('current-academic-year-tag');
+var modalInputTargetSelector = document.getElementById('SLO-selector-target');
+
+function getCurrentSchoolTerm() {
+  var date = new Date();
+  var AUGUST = 8;
+  var currentMonth = date.getMonth();
+  var currentYear = date.getFullYear();
+
+  if (currentMonth < AUGUST) {
+    var startYear = currentYear - 1;
+    var endYear = currentYear;
+    startYear = startYear.toString();
+    endYear = endYear.toString();
+    startYear = startYear.slice(2, 4);
+    endYear = endYear.slice(2, 4);
+    return "".concat(startYear, "-").concat(endYear);
+  } else {
+    var _startYear = currentYear;
+
+    var _endYear = currentYear + 1;
+
+    _startYear = _startYear.toString();
+    _endYear = _endYear.toString();
+    _startYear = _startYear.slice(2, 4);
+    _endYear = _endYear.slice(2, 4);
+    return "".concat(_startYear, "-").concat(_endYear);
+  }
+}
 
 function loadPlotSloSelector() {
   axios.get(allSloURL).then(function (response) {
@@ -78,6 +108,11 @@ function loadInputSloSelector() {
   });
 }
 
+function loadInputAcademicTermTag() {
+  modalInputAcademicTermTag.innerHTML = getCurrentSchoolTerm();
+  console.log("loaded!!");
+}
+
 function clearPlotMeasureSelector() {
   modalPlotMeasureSelector.innerHTML = null;
   var tempOption = document.createElement('option');
@@ -103,14 +138,23 @@ function clearPlotEndDateSelector() {
 }
 
 function clearInputMeasureSelector() {
-  modalInputMeasureSlector.innerHTML = null;
+  modalInputMeasureSelector.innerHTML = null;
   var tempOption = document.createElement('option');
   tempOption.value = 0;
   tempOption.innerHTML = "Choose...";
-  modalInputMeasureSlector.appendChild(tempOption);
+  modalInputMeasureSelector.appendChild(tempOption);
+}
+
+function clearInputTargetSelector() {
+  modalInputTargetSelector.innerHTML = null;
+  var tempOption = document.createElement('option');
+  tempOption.value = 0;
+  tempOption.innerHTML = "Choose...";
+  modalInputTargetSelector.appendChild(tempOption);
 }
 
 window.addEventListener("load", function () {
+  loadInputAcademicTermTag();
   loadPlotSloSelector();
   loadInputSloSelector();
 });
@@ -151,21 +195,21 @@ modalPlotSloSelector.addEventListener('change', function () {
       }
     }
 
-    modalInputMeasureSlector.selectedIndex = 0;
+    modalPlotMeasureSelector.selectedIndex = 0;
   });
 });
 modalPlotMeasureSelector.addEventListener('change', function () {
+  clearPlotStartDateSelector();
+  clearPlotEndDateSelector();
   var selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].innerHTML;
 
   if (selectedMeasure != "Choose...") {
-    clearPlotStartDateSelector();
-    clearPlotEndDateSelector();
     var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].innerHTML;
     console.log(selectedMeasure);
     var startDatesUrl = "https://visualization-practice-api.herokuapp.com/dates/".concat(selectedSlo, "/").concat(selectedMeasure);
     axios.get(startDatesUrl).then(function (response) {
       var count = 1;
-      console.log("dates loaded");
+      console.log("start date loader");
       var _iteratorNormalCompletion4 = true;
       var _didIteratorError4 = false;
       var _iteratorError4 = undefined;
@@ -194,22 +238,19 @@ modalPlotMeasureSelector.addEventListener('change', function () {
         }
       }
     });
-  } else {
-    clearPlotStartDateSelector();
-    clearPlotEndDateSelector();
   }
 });
 modalPlotStartDateSelector.addEventListener('change', function () {
+  clearPlotEndDateSelector();
   var selectedStartDate = modalPlotStartDateSelector.options[modalPlotStartDateSelector.selectedIndex].innerHTML;
 
   if (selectedStartDate != "Choose...") {
-    clearPlotEndDateSelector();
     var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].innerHTML;
     var selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].innerHTML;
     var endDatesUrl = "https://visualization-practice-api.herokuapp.com/startdate/".concat(selectedSlo, "/").concat(selectedMeasure, "?start=").concat(selectedStartDate);
     axios.get(endDatesUrl).then(function (response) {
       var count = 1;
-      console.log("dates loaded");
+      console.log("end date loader");
       var _iteratorNormalCompletion5 = true;
       var _didIteratorError5 = false;
       var _iteratorError5 = undefined;
@@ -238,10 +279,119 @@ modalPlotStartDateSelector.addEventListener('change', function () {
         }
       }
     });
-  } else {
-    clearPlotEndDateSelector();
+  }
+}); // modalPlotMeasureSelector.addEventListener('change', () => {
+//     let selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].innerHTML;
+//     if (selectedMeasure != "Choose...") {
+//         clearPlotStartDateSelector();
+//         clearPlotEndDateSelector()
+//         let selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].innerHTML;
+//         console.log(selectedMeasure)
+//         let startDatesUrl = `https://visualization-practice-api.herokuapp.com/dates/${selectedSlo}/${selectedMeasure}`;
+//         axios.get(startDatesUrl).then(response => {
+//             let count = 1;
+//             console.log("dates loaded")
+//             for (let date of response.data) {
+//                 let tempOption = document.createElement('option');
+//                 tempOption.value = count;
+//                 tempOption.innerHTML = date;
+//                 count += 1;
+//                 modalPlotStartDateSelector.appendChild(tempOption);
+//             }
+//         });
+//     }
+//     else {
+//         clearPlotStartDateSelector();
+//         clearPlotEndDateSelector()
+//     }
+// })
+
+modalInputSloSelector.addEventListener('change', function () {
+  clearInputMeasureSelector();
+  clearInputTargetSelector();
+  var selectedSlo = modalInputSloSelector.options[modalInputSloSelector.selectedIndex].innerHTML;
+
+  if (selectedSlo != "Choose...") {
+    var MeasureUrl = "https://visualization-practice-api.herokuapp.com/measure/".concat(selectedSlo);
+    axios.get(MeasureUrl).then(function (response) {
+      var count = 1;
+      console.log("measure loaded");
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = response.data[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var slo = _step6.value;
+          var tempOption = document.createElement('option');
+          tempOption.value = count;
+          tempOption.innerHTML = slo;
+          count += 1;
+          modalInputMeasureSelector.appendChild(tempOption);
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+            _iterator6["return"]();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
+
+      modalInputMeasureSelector.selectedIndex = 0;
+    });
   }
 });
+modalInputMeasureSelector.addEventListener('change', function () {
+  clearInputTargetSelector();
+  var selectedSlo = modalInputSloSelector.options[modalInputSloSelector.selectedIndex].innerHTML;
+  var selectedMeasure = modalInputMeasureSelector.options[modalInputMeasureSelector.selectedIndex].innerHTML;
+
+  if (selectedMeasure != "Choose...") {
+    console.log("target changed");
+    var MeasureUrl = "https://visualization-practice-api.herokuapp.com/targets/".concat(selectedSlo, "/").concat(selectedMeasure);
+    axios.get(MeasureUrl).then(function (response) {
+      var count = 1;
+      console.log("measure loaded");
+      var _iteratorNormalCompletion7 = true;
+      var _didIteratorError7 = false;
+      var _iteratorError7 = undefined;
+
+      try {
+        for (var _iterator7 = response.data[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+          var slo = _step7.value;
+          var tempOption = document.createElement('option');
+          tempOption.value = count;
+          tempOption.innerHTML = slo;
+          count += 1;
+          modalInputTargetSelector.appendChild(tempOption);
+        }
+      } catch (err) {
+        _didIteratorError7 = true;
+        _iteratorError7 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
+            _iterator7["return"]();
+          }
+        } finally {
+          if (_didIteratorError7) {
+            throw _iteratorError7;
+          }
+        }
+      }
+
+      modalInputTargetSelector.selectedIndex = 0;
+    });
+  }
+}); //modalInputMeasureSelector
+
 studentPecentageCheckSwitch.addEventListener('change', function () {
   if (studentPecentageCheckSwitch.checked) {
     numberOfStudentsContainer.style.display = "none";
