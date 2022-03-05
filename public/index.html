@@ -23,35 +23,29 @@
       <div class="modal-body">
     <form action="">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="SLO-selector-plt">SLO:</label>
-          </div>
-          <select id="SLO-selector">
-            <option selected value="0" disabled>Choose...</option>
+          <select id="SLO-selector-plt">
+            <option selected value="0" disabled>Choose...SLO</option>
           </select>
         </div>
+        <div class="description-container" style="display: none;">
+        <textarea class="form-control" id="modal-SLO-description-plt"readonly></textarea>
+      </div>
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="measure-selector-plt">Measure:</label>
-          </div>
           <select id="measure-selector-plt">
-            <option selected disabled>Choose...</option>
+            <option selected disabled>Choose...Measure</option>
+          </select>
+        </div>
+        <div class="description-container" style="display: none;">
+        <textarea class="form-control" id="modal-measure-description-plt" readonly></textarea>
+        </div>
+        <div class="input-group mb-3">
+          <select id="start-selector-plt">
+            <option selected disabled>Choose...Start Date</option>
           </select>
         </div>
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="start-selector">Start Date:</label>
-          </div>
-          <select id="start-selector">
-            <option selected disabled>Choose...</option>
-          </select>
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">End Date:</label>
-          </div>
-          <select id="end-selector">
-            <option selected >Choose...</option>
+          <select id="end-selector-plt">
+            <option selected >Choose...End Date</option>
           </select>
         </div>
    
@@ -79,66 +73,66 @@
       <div class="modal-body">
     <form action="">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="SLO-selector-dat">SLO:</label>
-          </div>
           <select id="SLO-selector-data">
-            <option selected>Choose...</option>
+            <option selected>Choose SLO</option>
           </select>
         </div>
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="measure-selector-dat">Measure:</label>
-          </div>
           <select id="measure-selector-data">
-            <option selected>Choose...</option>
+            <option selected>Choose Measure</option>
           </select>
         </div>
-      <div class="input-group mb-3">
+       <div class="input-group mb-3">
+          <select id="SLO-selector-target">
+            <option selected>Choose Target</option>
+          </select>
+        </div>
+        <div class="input-group mb-3" id="academic-year-area">
         <div class="input-group-prepend">
           <span class="input-group-text" id="academic-year-title-tag">Academic Year:</span>
         </div>
-         <div class="input-group-prepend ms-3">
+         <div class="input-group-prepend ">
           <span class="input-group-text" id="current-academic-year-tag">Default</span>
         </div>
       </div>
        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="SLO-selector-target">Target:</label>
-          </div>
-          <select id="SLO-selector-target">
-            <option selected>Choose...</option>
-          </select>
-        </div>
-       <div class="input-group mb-2">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="">Target amount:</span>
               </div>
               <input type="text" class="form-control" id="student-target-input">
       </div>
-      <div class="form-check form-switch mb-2">
+      <div class="form-check form-switch mb-3" id="flexSwitchArea">
         <input class="form-check-input" type="checkbox" id="flexSwitchStudentPercentageCheck">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Use only percentage of students who met target.</label>
+        <label class="form-check-label" for="flexSwitchCheckDefault" style="font-weight: 700;">Use only percentage of students who met target.</label>
       </div>
-      <div class="input-group mb-2" id="number-of-students-container">
+      <div class="input-group mb-3" id="number-of-students-container">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="">Number of Students:</span>
               </div>
               <input type="text" class="form-control" id="number-of-students-input">
       </div>
 
-      <div class="input-group mb-2" id="number-of-students-met-container">
+      <div class="input-group mb-3" id="number-of-students-met-container">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="">Number of Students that met the target:</span>
               </div>
               <input type="text" class="form-control" id="number-of-students-met-input">
       </div>
-      <div class="input-group mb-2" id="percentage-of-students-met-container" style="display: none;">
+      <div class="input-group mb-3" id="percentage-of-students-met-container" style="display: none;">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="">Percentage of students who met the target:</span>
               </div>
               <input type="text" class="form-control" id="percentage-of-students-met-input">
       </div>
+       <div class="input-group" id="result-description-container" >
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Result:</span>
+              </div>
+              <div class="description-container">
+              <textarea class="form-control" id="modal-SLO-description-data"></textarea>
+              </div>
+      </div>
+      
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
