@@ -10,18 +10,26 @@ var modalPlotSloSelector = document.getElementById('SLO-selector-plt');
 var modalPlotMeasureSelector = document.getElementById('measure-selector-plt');
 var modalPlotStartDateSelector = document.getElementById('start-selector-plt');
 var modalPlotEndDateSelector = document.getElementById('end-selector-plt');
+var modalPlotSloDescriptionContainer = document.getElementById('description-container-SLO-plt');
+var modalPlotSloDescriptionTextbox = document.getElementById('modal-SLO-description-plt');
+var modalPlotMeasureDescriptionContainer = document.getElementById('description-container-measure-plt');
+var modalPlotMeasureDescriptionTextbox = document.getElementById('modal-measure-description-plt');
 var modalInputSloSelector = document.getElementById('SLO-selector-data');
 var modalInputMeasureSelector = document.getElementById('measure-selector-data');
 var modalInputAcademicTermTag = document.getElementById('current-academic-year-tag');
 var modalInputTargetSelector = document.getElementById('SLO-selector-target');
+var modalInputSloDescriptionContainer = document.getElementById('modal-SLO-description-data');
+var modalInputMeasureDescriptionContainer = document.getElementById('modal-measure-description-data');
+var modalInputSloDescriptionTextBox = document.getElementById('modal-SLO-description-data');
+var moadalInputMeasureDescriptionTextbox = document.getElementById('modal-measure-description-data');
 
 function getCurrentSchoolTerm() {
   var date = new Date();
-  var AUGUST = 8;
+  var MAY = 5;
   var currentMonth = date.getMonth();
   var currentYear = date.getFullYear();
 
-  if (currentMonth < AUGUST) {
+  if (currentMonth < MAY) {
     var startYear = currentYear - 1;
     var endYear = currentYear;
     startYear = startYear.toString();
@@ -54,7 +62,7 @@ function loadPlotSloSelector() {
         var slo = _step.value;
         var tempOption = document.createElement('option');
         tempOption.value = count;
-        tempOption.innerHTML = slo;
+        tempOption.textContent = slo;
         count += 1;
         modalPlotSloSelector.appendChild(tempOption);
       }
@@ -87,7 +95,7 @@ function loadInputSloSelector() {
         var slo = _step2.value;
         var tempOption = document.createElement('option');
         tempOption.value = count;
-        tempOption.innerHTML = slo;
+        tempOption.textContent = slo;
         count += 1;
         modalInputSloSelector.appendChild(tempOption);
       }
@@ -109,47 +117,47 @@ function loadInputSloSelector() {
 }
 
 function loadInputAcademicTermTag() {
-  modalInputAcademicTermTag.innerHTML = getCurrentSchoolTerm();
+  modalInputAcademicTermTag.textContent = getCurrentSchoolTerm();
   console.log("loaded!!");
 }
 
 function clearPlotMeasureSelector() {
-  modalPlotMeasureSelector.innerHTML = null;
+  modalPlotMeasureSelector.textContent = null;
   var tempOption = document.createElement('option');
   tempOption.value = 0;
-  tempOption.innerHTML = "Choose...";
+  tempOption.textContent = "Choose Measure";
   modalPlotMeasureSelector.appendChild(tempOption);
 }
 
 function clearPlotStartDateSelector() {
-  modalPlotStartDateSelector.innerHTML = null;
+  modalPlotStartDateSelector.textContent = null;
   var tempOption = document.createElement('option');
   tempOption.value = 0;
-  tempOption.innerHTML = "Choose...";
+  tempOption.textContent = "Choose Start Date";
   modalPlotStartDateSelector.appendChild(tempOption);
 }
 
 function clearPlotEndDateSelector() {
-  modalPlotEndDateSelector.innerHTML = null;
+  modalPlotEndDateSelector.textContent = null;
   var tempOption = document.createElement('option');
   tempOption.value = 0;
-  tempOption.innerHTML = "Choose...";
+  tempOption.textContent = "Choose End Date";
   modalPlotEndDateSelector.appendChild(tempOption);
 }
 
 function clearInputMeasureSelector() {
-  modalInputMeasureSelector.innerHTML = null;
+  modalInputMeasureSelector.textContent = null;
   var tempOption = document.createElement('option');
   tempOption.value = 0;
-  tempOption.innerHTML = "Choose...";
+  tempOption.textContent = "Choose Measure";
   modalInputMeasureSelector.appendChild(tempOption);
 }
 
 function clearInputTargetSelector() {
-  modalInputTargetSelector.innerHTML = null;
+  modalInputTargetSelector.textContent = null;
   var tempOption = document.createElement('option');
   tempOption.value = 0;
-  tempOption.innerHTML = "Choose...";
+  tempOption.textContent = "Choose Target";
   modalInputTargetSelector.appendChild(tempOption);
 }
 
@@ -159,94 +167,150 @@ window.addEventListener("load", function () {
   loadInputSloSelector();
 });
 modalPlotSloSelector.addEventListener('change', function () {
+  var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].textContent;
+  var MeasureUrl = "https://visualization-practice-api.herokuapp.com/measure/".concat(selectedSlo);
   clearPlotMeasureSelector();
   clearPlotStartDateSelector();
   clearPlotEndDateSelector();
-  var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].innerHTML;
-  var MeasureUrl = "https://visualization-practice-api.herokuapp.com/measure/".concat(selectedSlo);
+  modalPlotMeasureDescriptionContainer.style.display = "none";
   axios.get(MeasureUrl).then(function (response) {
-    var count = 1;
-    console.log("measure loaded");
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
+    if (response.status) {
+      var count = 1;
+      console.log("measure loaded");
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
 
-    try {
-      for (var _iterator3 = response.data[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var slo = _step3.value;
-        var tempOption = document.createElement('option');
-        tempOption.value = count;
-        tempOption.innerHTML = slo;
-        count += 1;
-        modalPlotMeasureSelector.appendChild(tempOption);
-      }
-    } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
-    } finally {
       try {
-        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-          _iterator3["return"]();
+        for (var _iterator3 = response.data[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var measure = _step3.value;
+
+          if (measure != "description") {
+            var tempOption = document.createElement('option');
+            tempOption.value = count;
+            tempOption.textContent = measure;
+            count += 1;
+            modalPlotMeasureSelector.appendChild(tempOption);
+          }
+
+          modalPlotMeasureSelector.selectedIndex = 0;
         }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
       } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
         }
       }
-    }
 
-    modalPlotMeasureSelector.selectedIndex = 0;
+      loadSloDescriptionSlo(selectedSlo);
+    }
   });
 });
+
+function loadSloDescriptionSlo(selectedSlo) {
+  var sloDescriptionUrl = "https://visualization-practice-api.herokuapp.com/slo/description/".concat(selectedSlo);
+  axios.get(sloDescriptionUrl).then(function (response) {
+    console.log(response.data);
+    modalPlotSloDescriptionTextbox.value = "";
+    modalPlotSloDescriptionTextbox.value = "SLO Description: " + response.data;
+    modalPlotSloDescriptionTextbox.style.height = "auto";
+    modalPlotSloDescriptionContainer.style.display = "flex";
+  });
+}
+
+function loadSloDescriptionData(selectedSlo) {
+  var sloDescriptionUrl = "https://visualization-practice-api.herokuapp.com/slo/description/".concat(selectedSlo);
+  axios.get(sloDescriptionUrl).then(function (response) {
+    console.log(response.data);
+    modalInputSloDescriptionTextBox.value = "";
+    modalInputSloDescriptionTextBox.value = "SLO Description: " + response.data;
+    modalInputSloDescriptionTextBox.style.height = "auto";
+    modalInputSloDescriptionContainer.style.display = "flex";
+  });
+}
+
+function loadMeasureDescriptionSlo(selectedSlo, selectedMeasure) {
+  var measureDescriptionUrl = "https://visualization-practice-api.herokuapp.com/measure/description/".concat(selectedSlo, "/").concat(selectedMeasure);
+  axios.get(measureDescriptionUrl).then(function (response) {
+    console.log(response.data);
+    modalPlotMeasureDescriptionTextbox.value = "";
+    modalPlotMeasureDescriptionTextbox.value = "Measure Description: " + response.data;
+    modalPlotMeasureDescriptionTextbox.style.height = "auto";
+    modalPlotMeasureDescriptionContainer.style.display = "flex";
+  });
+}
+
+function loadMeasureDescriptionData(selectedSlo, selectedMeasure) {
+  var measureDescriptionUrl = "https://visualization-practice-api.herokuapp.com/measure/description/".concat(selectedSlo, "/").concat(selectedMeasure);
+  axios.get(measureDescriptionUrl).then(function (response) {
+    console.log(response.data);
+    moadalInputMeasureDescriptionTextbox.value = "";
+    moadalInputMeasureDescriptionTextbox.value = "Measure Description: " + response.data;
+    moadalInputMeasureDescriptionTextbox.style.height = "auto";
+    modalInputMeasureDescriptionContainer.style.display = "flex";
+  });
+}
+
 modalPlotMeasureSelector.addEventListener('change', function () {
   clearPlotStartDateSelector();
   clearPlotEndDateSelector();
-  var selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].innerHTML;
+  var selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].textContent;
 
-  if (selectedMeasure != "Choose...") {
-    var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].innerHTML;
+  if (selectedMeasure != "Choose Measure") {
+    var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].textContent;
     console.log(selectedMeasure);
     var startDatesUrl = "https://visualization-practice-api.herokuapp.com/dates/".concat(selectedSlo, "/").concat(selectedMeasure);
     axios.get(startDatesUrl).then(function (response) {
-      var count = 1;
-      console.log("start date loader");
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
+      if (response.status) {
+        var count = 1;
+        console.log("start date loader");
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
 
-      try {
-        for (var _iterator4 = response.data[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-          var date = _step4.value;
-          var tempOption = document.createElement('option');
-          tempOption.value = count;
-          tempOption.innerHTML = date;
-          count += 1;
-          modalPlotStartDateSelector.appendChild(tempOption);
-        }
-      } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
-      } finally {
         try {
-          if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-            _iterator4["return"]();
+          for (var _iterator4 = response.data[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var date = _step4.value;
+            var tempOption = document.createElement('option');
+            tempOption.value = count;
+            tempOption.textContent = date;
+            count += 1;
+            modalPlotStartDateSelector.appendChild(tempOption);
           }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
         } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+              _iterator4["return"]();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
           }
         }
       }
     });
+    loadMeasureDescriptionSlo(selectedSlo, selectedMeasure);
   }
 });
 modalPlotStartDateSelector.addEventListener('change', function () {
   clearPlotEndDateSelector();
-  var selectedStartDate = modalPlotStartDateSelector.options[modalPlotStartDateSelector.selectedIndex].innerHTML;
+  var selectedStartDate = modalPlotStartDateSelector.options[modalPlotStartDateSelector.selectedIndex].textContent;
 
-  if (selectedStartDate != "Choose...") {
-    var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].innerHTML;
-    var selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].innerHTML;
+  if (selectedStartDate != "Choose Start Date") {
+    var selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].textContent;
+    var selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].textContent;
     var endDatesUrl = "https://visualization-practice-api.herokuapp.com/startdate/".concat(selectedSlo, "/").concat(selectedMeasure, "?start=").concat(selectedStartDate);
     axios.get(endDatesUrl).then(function (response) {
       var count = 1;
@@ -260,7 +324,7 @@ modalPlotStartDateSelector.addEventListener('change', function () {
           var date = _step5.value;
           var tempOption = document.createElement('option');
           tempOption.value = count;
-          tempOption.innerHTML = date;
+          tempOption.textContent = date;
           count += 1;
           modalPlotEndDateSelector.appendChild(tempOption);
         }
@@ -280,38 +344,14 @@ modalPlotStartDateSelector.addEventListener('change', function () {
       }
     });
   }
-}); // modalPlotMeasureSelector.addEventListener('change', () => {
-//     let selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].innerHTML;
-//     if (selectedMeasure != "Choose...") {
-//         clearPlotStartDateSelector();
-//         clearPlotEndDateSelector()
-//         let selectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].innerHTML;
-//         console.log(selectedMeasure)
-//         let startDatesUrl = `https://visualization-practice-api.herokuapp.com/dates/${selectedSlo}/${selectedMeasure}`;
-//         axios.get(startDatesUrl).then(response => {
-//             let count = 1;
-//             console.log("dates loaded")
-//             for (let date of response.data) {
-//                 let tempOption = document.createElement('option');
-//                 tempOption.value = count;
-//                 tempOption.innerHTML = date;
-//                 count += 1;
-//                 modalPlotStartDateSelector.appendChild(tempOption);
-//             }
-//         });
-//     }
-//     else {
-//         clearPlotStartDateSelector();
-//         clearPlotEndDateSelector()
-//     }
-// })
-
+});
 modalInputSloSelector.addEventListener('change', function () {
   clearInputMeasureSelector();
   clearInputTargetSelector();
-  var selectedSlo = modalInputSloSelector.options[modalInputSloSelector.selectedIndex].innerHTML;
+  modalInputMeasureDescriptionContainer.style.display = "none";
+  var selectedSlo = modalInputSloSelector.options[modalInputSloSelector.selectedIndex].textContent;
 
-  if (selectedSlo != "Choose...") {
+  if (selectedSlo != "Choose SLO") {
     var MeasureUrl = "https://visualization-practice-api.herokuapp.com/measure/".concat(selectedSlo);
     axios.get(MeasureUrl).then(function (response) {
       var count = 1;
@@ -322,12 +362,15 @@ modalInputSloSelector.addEventListener('change', function () {
 
       try {
         for (var _iterator6 = response.data[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-          var slo = _step6.value;
-          var tempOption = document.createElement('option');
-          tempOption.value = count;
-          tempOption.innerHTML = slo;
-          count += 1;
-          modalInputMeasureSelector.appendChild(tempOption);
+          var measure = _step6.value;
+
+          if (measure != "description") {
+            var tempOption = document.createElement('option');
+            tempOption.value = count;
+            tempOption.textContent = measure;
+            count += 1;
+            modalInputMeasureSelector.appendChild(tempOption);
+          }
         }
       } catch (err) {
         _didIteratorError6 = true;
@@ -345,15 +388,18 @@ modalInputSloSelector.addEventListener('change', function () {
       }
 
       modalInputMeasureSelector.selectedIndex = 0;
+      modalInputSloDescriptionContainer.style.display = "flex";
+      loadSloDescriptionData(selectedSlo);
     });
   }
 });
 modalInputMeasureSelector.addEventListener('change', function () {
-  clearInputTargetSelector();
-  var selectedSlo = modalInputSloSelector.options[modalInputSloSelector.selectedIndex].innerHTML;
-  var selectedMeasure = modalInputMeasureSelector.options[modalInputMeasureSelector.selectedIndex].innerHTML;
+  clearInputTargetSelector(); // modalInputMeasureDescriptionContainer.style.display = "none";
 
-  if (selectedMeasure != "Choose...") {
+  var selectedSlo = modalInputSloSelector.options[modalInputSloSelector.selectedIndex].textContent;
+  var selectedMeasure = modalInputMeasureSelector.options[modalInputMeasureSelector.selectedIndex].textContent;
+
+  if (selectedMeasure != "Choose Measure") {
     console.log("target changed");
     var MeasureUrl = "https://visualization-practice-api.herokuapp.com/targets/".concat(selectedSlo, "/").concat(selectedMeasure);
     axios.get(MeasureUrl).then(function (response) {
@@ -365,12 +411,15 @@ modalInputMeasureSelector.addEventListener('change', function () {
 
       try {
         for (var _iterator7 = response.data[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-          var slo = _step7.value;
-          var tempOption = document.createElement('option');
-          tempOption.value = count;
-          tempOption.innerHTML = slo;
-          count += 1;
-          modalInputTargetSelector.appendChild(tempOption);
+          var target = _step7.value;
+
+          if (target != "description") {
+            var tempOption = document.createElement('option');
+            tempOption.value = count;
+            tempOption.textContent = target;
+            count += 1;
+            modalInputTargetSelector.appendChild(tempOption);
+          }
         }
       } catch (err) {
         _didIteratorError7 = true;
@@ -386,12 +435,12 @@ modalInputMeasureSelector.addEventListener('change', function () {
           }
         }
       }
-
-      modalInputTargetSelector.selectedIndex = 0;
     });
+    modalInputTargetSelector.selectedIndex = 0;
+    modalInputMeasureDescriptionContainer.style.display = "flex";
+    loadMeasureDescriptionData(selectedSlo, selectedMeasure);
   }
-}); //modalInputMeasureSelector
-
+});
 studentPecentageCheckSwitch.addEventListener('change', function () {
   if (studentPecentageCheckSwitch.checked) {
     numberOfStudentsContainer.style.display = "none";

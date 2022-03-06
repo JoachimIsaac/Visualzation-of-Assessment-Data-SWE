@@ -13,10 +13,14 @@
   justify-content: center;
   margin-bottom: 0.5rem !important;
 }
+.modal-body form .input-selector {
+  justify-content: center;
+}
 .modal-body form .description-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
+  margin-top: 0.3rem;
 }
 
 .input-group-text {
@@ -44,8 +48,9 @@
 
 #modal-SLO-description-plt {
   border-radius: 0.75rem;
-  border: 1px solid #0d6efd;
   width: 80%;
+  height: 50px;
+  margin-bottom: 0.2rem;
 }
 
 #measure-selector-plt {
@@ -59,8 +64,8 @@
 
 #modal-measure-description-plt {
   border-radius: 0.75rem;
-  border: 1px solid #0d6efd;
   width: 80%;
+  height: 50px;
 }
 
 #start-selector-plt {
@@ -99,6 +104,17 @@
   font-weight: 700;
   width: 80%;
   text-align: center;
+}
+
+#modal-SLO-description-data {
+  border-radius: 0.75rem;
+  width: 80% !important;
+}
+
+#modal-measure-description-data {
+  border-radius: 0.75rem;
+  width: 80%;
+  height: 30px;
 }
 
 #measure-selector-data {
@@ -165,16 +181,13 @@
   border: 1px solid #0d6efd;
 }
 
-#result-description-container {
-  width: 100%;
-  justify-content: center;
-}
-#result-description-container .description-container {
+#result-description-container .input-group-prepend {
+  display: flex;
   width: 100%;
 }
 
 #modal-SLO-description-data {
   border-radius: 0.75rem;
-  border: 1px solid #0d6efd;
-  width: 90%;
+  width: 100%;
+  height: 30px;
 }
