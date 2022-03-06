@@ -24,28 +24,28 @@
     <form action="">
         <div class="input-group mb-3">
           <select id="SLO-selector-plt">
-            <option selected value="0" disabled>Choose...SLO</option>
+            <option selected value="0" disabled>Choose SLO</option>
           </select>
         </div>
-        <div class="description-container" style="display: none;">
+      <div class="description-container" id="description-container-SLO-plt" style="display: none;">
         <textarea class="form-control" id="modal-SLO-description-plt"readonly></textarea>
       </div>
         <div class="input-group mb-3">
           <select id="measure-selector-plt">
-            <option selected disabled>Choose...Measure</option>
+            <option selected disabled>Choose Measure</option>
           </select>
         </div>
-        <div class="description-container" style="display: none;">
+        <div class="description-container" id="description-container-measure-plt" style="display: none;">
         <textarea class="form-control" id="modal-measure-description-plt" readonly></textarea>
         </div>
         <div class="input-group mb-3">
           <select id="start-selector-plt">
-            <option selected disabled>Choose...Start Date</option>
+            <option selected disabled>Choose Start Date</option>
           </select>
         </div>
         <div class="input-group mb-3">
           <select id="end-selector-plt">
-            <option selected >Choose...End Date</option>
+            <option selected >Choose End Date</option>
           </select>
         </div>
    
@@ -72,21 +72,30 @@
       </div>
       <div class="modal-body">
     <form action="">
-        <div class="input-group mb-3">
+      <div id="form-selector-section">
+        <div class="input-group input-selector">
           <select id="SLO-selector-data">
-            <option selected>Choose SLO</option>
+            <option selected disabled>Choose SLO</option>
           </select>
         </div>
-        <div class="input-group mb-3">
+      <div class="description-container"  >
+        <textarea class="form-control" id="modal-SLO-description-data" style="display: none;"readonly></textarea>
+      </div>
+        <div class="input-group input-selector ">
           <select id="measure-selector-data">
             <option selected>Choose Measure</option>
           </select>
         </div>
-       <div class="input-group mb-3">
+        <div class="description-container" > 
+        <textarea class="form-control" id="modal-measure-description-data"style="display: none;" readonly></textarea>
+      </div>
+       <div class="input-group input-selector">
           <select id="SLO-selector-target">
             <option selected>Choose Target</option>
           </select>
         </div>
+      </div>
+      
         <div class="input-group mb-3" id="academic-year-area">
         <div class="input-group-prepend">
           <span class="input-group-text" id="academic-year-title-tag">Academic Year:</span>
@@ -95,6 +104,7 @@
           <span class="input-group-text" id="current-academic-year-tag">Default</span>
         </div>
       </div>
+      <div id="form-input-section">
        <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="">Target amount:</span>
@@ -127,12 +137,10 @@
        <div class="input-group" id="result-description-container" >
               <div class="input-group-prepend">
                 <span class="input-group-text" id="">Result:</span>
-              </div>
-              <div class="description-container">
-              <textarea class="form-control" id="modal-SLO-description-data"></textarea>
+               <textarea class="form-control" id="modal-SLO-description-data"></textarea>
               </div>
       </div>
-      
+      </div>
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
