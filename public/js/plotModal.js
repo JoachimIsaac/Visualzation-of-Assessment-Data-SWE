@@ -8,11 +8,8 @@ const modalPlotStartDateSelector = document.getElementById('start-selector-plt')
 const modalPlotEndDateSelector = document.getElementById('end-selector-plt');
 
 const modalPlotSloDescriptionContainer = document.getElementById('description-container-SLO-plt');
-
 const modalPlotSloDescriptionTextbox = document.getElementById('modal-SLO-description-plt');
-
 const modalPlotMeasureDescriptionContainer = document.getElementById('description-container-measure-plt');
-
 const modalPlotMeasureDescriptionTextbox = document.getElementById('modal-measure-description-plt');
 
 
