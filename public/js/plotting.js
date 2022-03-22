@@ -2,6 +2,7 @@
 const plotButton = document.getElementById('plotting-button');
 const dashboardLogo = document.getElementById('dashboard-logo');
 const closePlotModalButton = document.querySelector("#plottingModal > div > div > div.modal-footer > button.btn.btn-secondary")
+const chartElement = document.getElementById('chart-div');
 
 function clearDashboardLogo() {
     dashboardLogo.style.display = "none";
@@ -11,16 +12,17 @@ function closePlottingModal() {
     closePlotModalButton.click();
 }
 
+
 function plotChart() {
     google.load("visualization", "1", { packages: ["corechart"] });
     google.setOnLoadCallback(drawChart);
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['X', 'Points', 'Line'],
-            ["17-18", 3.5, 5],
-            ["18-19", 5.5, 5],
-            ["19-20", 5, 5],
-            ["20-21", 7, 5]
+            ['X', 'Points', 'Line','Line'],
+            ["17-18", 3.5, 5,10],
+            ["18-19", 5.5, 5,10],
+            ["19-20", 5, 5,10],
+            ["20-21", 7, 5,10]
         ]);
 
         var options = {
@@ -30,12 +32,20 @@ function plotChart() {
             legend: 'none',
             interpolateNulls: true,
             series: {
-                1: { lineWidth: 1, pointSize: 0 }
-            }
+                1: { lineWidth: 1, pointSize: 0 },
+                2:  { lineWidth: 1, pointSize: 0 }
+            },
+            width: '100%',
+            height: '100%',
+            backgroundColor: { fill: 'transparent' }
         };
 
-        var chart = new google.visualization.ScatterChart(document.getElementById('chart-div'));
+        chartElement.style.display = "flex";
+
+        var chart = new google.visualization.ScatterChart(chartElement);
         chart.draw(data, options);
+        
+        
     }
 }
 
